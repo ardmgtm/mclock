@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mclock/ui/alarm_page.dart';
+import 'package:mclock/ui/countdown_page.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -83,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen>
         children: [
           AlarmPage(),
           Container(),
-          Container(),
+          CountdownPage(),
         ],
       ),
     );
