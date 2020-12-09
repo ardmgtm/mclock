@@ -1,12 +1,20 @@
 import 'package:analog_clock/analog_clock.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mclock/model/alarm.dart';
 import 'package:timer_builder/timer_builder.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class AlarmPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    List<Alarm> _alarmList = [
+      Alarm(Duration(hours: 05, minutes: 30), true, true, "Wake Up !"),
+      Alarm(Duration(hours: 07, minutes: 00), true, true, "Start Working"),
+      Alarm(Duration(hours: 13, minutes: 30), false, true, "Meet Client"),
+      Alarm(Duration(hours: 16, minutes: 00), true, true, "Go Home"),
+      Alarm(Duration(hours: 17, minutes: 00), false, true, "Go Shopping"),
+    ];
     return Stack(
       children: [
         Center(
@@ -98,7 +106,7 @@ class AlarmPage extends StatelessWidget {
               ),
               Expanded(
                 child: ListView.separated(
-                  itemCount: 3,
+                  itemCount: _alarmList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -109,23 +117,28 @@ class AlarmPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "07:30 AM",
+                                DateFormat.jm().format(
+                                  DateTime(0).add(_alarmList[index].time),
+                                ),
                                 style: TextStyle(
                                   fontSize: 32,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.grey[800],
+                                  color: _alarmList[index].isActive
+                                      ? Colors.grey[800]
+                                      : Colors.grey[400],
                                 ),
                               ),
                               Text(
-                                "Start Working",
-                                style: TextStyle(color: Colors.grey),
+                                _alarmList[index].label,
+                                style: TextStyle(color: Colors.grey[400]),
                               ),
                             ],
                           ),
                           Switch(
                             activeColor: Colors.purple[700],
-                            activeTrackColor: Colors.grey[300],
-                            value: true,
+                            activeTrackColor: Colors.grey[400],
+                            inactiveTrackColor: Colors.grey[400],
+                            value: _alarmList[index].isActive,
                             onChanged: (bool value) {},
                           )
                         ],

@@ -32,7 +32,7 @@ class _StopwatchPageState extends State<StopwatchPage> {
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
     String miliseconds =
-        twoDigits(duration.inMilliseconds.remainder(1000) ~/ 10);
+        (duration.inMilliseconds.remainder(1000) ~/ 100).toString();
     return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds.$miliseconds";
   }
 
@@ -50,7 +50,8 @@ class _StopwatchPageState extends State<StopwatchPage> {
         Stack(
           children: [
             CircularStepProgressIndicator(
-              startingAngle: 3.14 * _stopwatchTime.inSeconds.remainder(60) / 30,
+              startingAngle:
+                  3.14 * (_stopwatchTime.inSeconds + 2).remainder(60) / 30,
               totalSteps: 60,
               stepSize: 20,
               padding: 3.14 / 25,
@@ -119,7 +120,11 @@ class _StopwatchPageState extends State<StopwatchPage> {
                       color: Colors.white,
                     ),
                     Text(
-                      _isStopped || _isPaused ? "Play" : "Stop",
+                      _isStopped
+                          ? "Play"
+                          : _isPaused
+                              ? "Resume"
+                              : "Stop",
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,

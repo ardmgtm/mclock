@@ -55,6 +55,8 @@ class _CountdownPageState extends State<CountdownPage> {
           CircularPercentIndicator(
             radius: 250,
             lineWidth: 8,
+            animation: true,
+            animateFromLastPercent: true,
             percent: _isStopped
                 ? 0.0
                 : 1.0 -
